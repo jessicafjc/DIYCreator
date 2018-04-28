@@ -35,51 +35,58 @@
 		<div class="mui-content">
 			<!--轮播图-->
 			<div id="slider" class="mui-slider">
-			<div id="testSlider" class="mui-slider-group mui-slider-loop">
-				<div id="N7TP444W" class="mui-slider-item mui-slider-item-duplicate">
-					<a href="#"><img src="images/muwu.jpg">
-						<p class="mui-slider-title">小兔子手工折纸教程</p>
-					</a>
-				</div>
-				<div id="K081DDDX" class="mui-slider-item">
-					<a href="#"><img src="images/shuijiao.jpg">
+				<div id="testSlider" class="mui-slider-group mui-slider-loop">
+					<div id="N7TP444W" class="mui-slider-item mui-slider-item-duplicate">
+						<a href="#"><img src="images/muwu.jpg">
+							<p class="mui-slider-title">小兔子手工折纸教程</p>
+						</a>
+					</div>
+					<div id="K081DDDX" class="mui-slider-item">
+						<a href="#"><img src="images/shuijiao.jpg">
+							<p class="mui-slider-title">小马胸针</p>
+						</a>
+					</div>
+					<div id="9QJA111T" class="mui-slider-item">
+						<a href="#"><img src="images/yuantiao.jpg">
+							<p class="mui-slider-title">彩色灯笼</p>
+						</a>
+					</div>
+					<div id="6FiKOOOc" class="mui-slider-item">
+						<a href="#"><img src="images/cbd.jpg">
+							<p class="mui-slider-title">旧玩具改造——恐龙</p>
+						</a>
+					</div>
+					<div id="N7TP444W" class="mui-slider-item">
+						<a href="#"><img src="images/muwu.jpg">
+							<p class="mui-slider-title">小兔子手工折纸教程</p>
+						</a>
+					</div>
+					<div id="K081DDDX" class="mui-slider-item mui-slider-item-duplicate"><img src="images/shuijiao.jpg">
 						<p class="mui-slider-title">小马胸针</p>
-					</a>
+					</div>
 				</div>
-				<div id="9QJA111T" class="mui-slider-item">
-					<a href="#"><img src="images/yuantiao.jpg">
-						<p class="mui-slider-title">彩色灯笼</p>
-					</a>
-				</div>
-				<div id="6FiKOOOc" class="mui-slider-item">
-					<a href="#"><img src="images/cbd.jpg">
-						<p class="mui-slider-title">旧玩具改造——恐龙</p>
-					</a>
-				</div>
-				<div id="N7TP444W" class="mui-slider-item">
-					<a href="#"><img src="images/muwu.jpg">
-						<p class="mui-slider-title">小兔子手工折纸教程</p>
-					</a>
-				</div>
-				<div id="K081DDDX" class="mui-slider-item mui-slider-item-duplicate"><img src="images/shuijiao.jpg">
-					<p class="mui-slider-title">小马胸针</p>
-				</div>
-			</div>
-			<div class="mui-slider-indicator mui-text-right">
+				<div class="mui-slider-indicator mui-text-right">
 					<div class="mui-indicator mui-active"></div>
 					<div class="mui-indicator"></div>
 					<div class="mui-indicator"></div>
 					<div class="mui-indicator"></div>
 				</div>
-		</div>
-		<!--每日推荐-->
+			</div>
+			<!--每日推荐-->
 			<div class="mui-content" id="DailyRecommendationDiv" style="background-color:#fff">
 				<h5 style="background-color:#efeff4">每日推荐</h5>
 				<ul class="mui-table-view mui-grid-view">
 
 				</ul>
 			</div>
+			<!---->
+			<!--最新更新-->
+			<div class="mui-content" id="LatestUpdataDiv" style="background-color:#fff">
+				<h5 style="background-color:#efeff4">最新更新</h5>
+				<ul class="mui-table-view mui-grid-view">
 
+				</ul>
+			</div>
 			<!---->
 		</div>
 	</body>
@@ -187,6 +194,51 @@
 				}
 				DailyRecommendationDiv.innerHTML = strHtml;
 				mui("#DailyRecommendationDiv").on('tap', 'li', function() {
+					var sendId = this.getAttribute("id");
+					//打开详细页面
+					mui.openWindow({
+						url: 'detail.html',
+						id: 'detail',
+						extras: {
+							sendId: sendId
+						}
+					});
+				});
+
+			},
+			error: function(error) {
+				plus.ui.toast("null");
+			}
+		});
+		var Latestquery = new Bmob.Query(DetailsList);
+		//按更新时间排序
+		Latestquery.descending("updatedAt");
+		//获取四条数据
+		Latestquery.limit(4);
+		Latestquery.find({
+			success: function(results) {
+
+				var LatestUpdataDiv = document.getElementById("LatestUpdataDiv");
+				var strHtml = ""
+				var object = results[results.length - 1];
+				strHtml += '<h5 style="background-color:#efeff4">最近更新</h5>';
+				strHtml += '<ul class="mui-table-view mui-grid-view">';
+				//				plus.ui.toast("共查询到 " + results.length + " 条记录");
+				// 循环处理查询到的数据
+				for(var i = 0; i < results.length; i++) {
+					var object = results[i];
+					var AdTitle = object.get('AdTitle')
+					var AdImageUrl = object.get('AdImageUrl')
+					strHtml += '<li id="' + object.id + '" class="mui-table-view-cell mui-media mui-col-xs-6">';
+					strHtml += '<a href="#">';
+					strHtml += '<img class="mui-media-object" src="' + AdImageUrl + '">';
+					strHtml += '<div class="mui-media-body">' + AdTitle + '</div>'
+					strHtml += '</a>'
+					strHtml += '</li>'
+					//					plus.ui.toast(object.id + ' - ' + object.get('AdTitle'));
+				}
+				LatestUpdataDiv.innerHTML = strHtml;
+				mui("#LatestUpdataDiv").on('tap', 'li', function() {
 					var sendId = this.getAttribute("id");
 					//打开详细页面
 					mui.openWindow({
