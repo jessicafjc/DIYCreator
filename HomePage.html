@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>首页</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<script type="text/javascript" src="js/jquery.min.js"></script>
+		<script src="js/mui.min.js"></script>
+		<script type="text/javascript" src="js/bmobJS/bmob.js"></script>
+		<link rel="stylesheet" href="css/mui.min.css">
+		<style>
+			html,
+			body {
+				background-color: #efeff4;
+			}
+			
+			h5 {
+				padding-top: 8px;
+				padding-bottom: 8px;
+				text-indent: 12px;
+			}
+			
+			.mui-table-view.mui-grid-view .mui-table-view-cell .mui-media-body {
+				font-size: 15px;
+				margin-top: 8px;
+				color: #333;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="mui-content">
+			<!--轮播图-->
+			<div id="slider" class="mui-slider">
+			<div id="testSlider" class="mui-slider-group mui-slider-loop">
+				<div id="N7TP444W" class="mui-slider-item mui-slider-item-duplicate">
+					<a href="#"><img src="images/muwu.jpg">
+						<p class="mui-slider-title">小兔子手工折纸教程</p>
+					</a>
+				</div>
+				<div id="K081DDDX" class="mui-slider-item">
+					<a href="#"><img src="images/shuijiao.jpg">
+						<p class="mui-slider-title">小马胸针</p>
+					</a>
+				</div>
+				<div id="9QJA111T" class="mui-slider-item">
+					<a href="#"><img src="images/yuantiao.jpg">
+						<p class="mui-slider-title">彩色灯笼</p>
+					</a>
+				</div>
+				<div id="6FiKOOOc" class="mui-slider-item">
+					<a href="#"><img src="images/cbd.jpg">
+						<p class="mui-slider-title">旧玩具改造——恐龙</p>
+					</a>
+				</div>
+				<div id="N7TP444W" class="mui-slider-item">
+					<a href="#"><img src="images/muwu.jpg">
+						<p class="mui-slider-title">小兔子手工折纸教程</p>
+					</a>
+				</div>
+				<div id="K081DDDX" class="mui-slider-item mui-slider-item-duplicate"><img src="images/shuijiao.jpg">
+					<p class="mui-slider-title">小马胸针</p>
+				</div>
+			</div>
+			<div class="mui-slider-indicator mui-text-right">
+					<div class="mui-indicator mui-active"></div>
+					<div class="mui-indicator"></div>
+					<div class="mui-indicator"></div>
+					<div class="mui-indicator"></div>
+				</div>
+		</div>
+		<!--每日推荐-->
+			<div class="mui-content" id="DailyRecommendationDiv" style="background-color:#fff">
+				<h5 style="background-color:#efeff4">每日推荐</h5>
+				<ul class="mui-table-view mui-grid-view">
+
+				</ul>
+			</div>
+
+			<!---->
+		</div>
+	</body>
+	<script>
+		//		mui.init({
+		//			swipeBack: true //启用右滑关闭功能
+		//		});
+
+		//连接bmob云后台
+		Bmob.initialize("3d5064e6a4219ca68cba0c73e77acb2c", "016f7a543de4541347715ab101341c60");
+		//获取广告表
+		var Advertise = Bmob.Object.extend("Advertise");
+		var query = new Bmob.Query(Advertise);
+		// 查询所有广告数据 
+		query.find({
+			success: function(results) {
+				//				alert("共查询到 " + results.length + " 条记录");
+				//动态添加轮播图
+				var testSlider = document.getElementById("testSlider");
+				var strHtml = ""
+				var object = results[results.length - 1];
+				var AdTitle = object.get('AdTitle')
+				//				alert(AdTitle)
+				var AdImageUrl = object.get('AdImageUrl')
+				//第一个节点是最后一个广告
+				strHtml += '<div id="' + object.id + '" class="mui-slider-item mui-slider-item-duplicate">';
+				strHtml += '<a href="#">';
+				strHtml += '<img src="' + AdImageUrl + '">';
+				strHtml += '<p class="mui-slider-title">' + AdTitle + '</p>';
+				strHtml += '</a>';
+				strHtml += '</div>';
+				for(var i = 0; i < results.length; i++) {
+					var object = results[i];
+					//alert(object.id + ' - ' + object.get('AdTitle') + object.get('AdImageUrl'));
+					var AdTitle = object.get('AdTitle')
+					var AdImageUrl = object.get('AdImageUrl')
+					//循环
+					strHtml += '<div id="' + object.id + '" class="mui-slider-item">';
+					strHtml += '<a href="#">';
+					strHtml += '<img src="' + AdImageUrl + '">';
+					strHtml += '<p class="mui-slider-title">' + AdTitle + '</p>';
+					strHtml += '</a>';
+					strHtml += '</div>';
+					//					alert(AdTitle);
+				}
+				//最后一个节点是第一个广告
+				var object = results[0];
+				var AdTitle = object.get('AdTitle')
+				//				alert(AdTitle)
+				var AdImageUrl = object.get('AdImageUrl')
+				strHtml += '<div id="' + object.id + '" class="mui-slider-item mui-slider-item-duplicate">';
+				strHtml += '<a href="#">';
+				strHtml += '<img src="' + AdImageUrl + '">';
+				strHtml += '<p class="mui-slider-title">' + AdTitle + '</p>';
+				strHtml += '</a>';
+				strHtml += '</div>';
+				testSlider.innerHTML = strHtml;
+				//				alert(strHtml);
+				mui("#testSlider").on('tap', 'div', function() {
+					var sendId = this.getAttribute("id");
+					//打开广告详情页面
+					mui.openWindow({
+						url: 'AdDetail.html',
+						id: 'AdDetail',
+						extras: {
+							sendId: sendId
+						}
+					});
+				});
+			},
+			error: function(error) {
+				alert("查询失败: " + error.code + " " + error.message);
+			},
+		});
+		var gallery = mui('.mui-slider');
+		gallery.slider({
+			interval: 5000 //自动轮播周期，若为0则不自动播放，默认为0；
+		});
+		//获取每日推荐数据——>选择详情列表为true的数据
+		var DetailsList = Bmob.Object.extend("DetailsTable");
+		var DetailsListquery = new Bmob.Query(DetailsList);
+		DetailsListquery.equalTo("Recommend", true);
+		DetailsListquery.find({
+			success: function(results) {
+
+				var DailyRecommendationDiv = document.getElementById("DailyRecommendationDiv");
+				var strHtml = ""
+				var object = results[results.length - 1];
+
+				strHtml += '<h5 style="background-color:#efeff4">每日推荐</h5>';
+				strHtml += '<ul class="mui-table-view mui-grid-view">';
+				//				plus.ui.toast("共查询到 " + results.length + " 条记录");
+				// 循环处理查询到的数据
+				for(var i = 0; i < results.length; i++) {
+					var object = results[i];
+					var AdTitle = object.get('AdTitle')
+					var AdImageUrl = object.get('AdImageUrl')
+					strHtml += '<li id="' + object.id + '" class="mui-table-view-cell mui-media mui-col-xs-6">';
+					strHtml += '<a href="#">';
+					strHtml += '<img class="mui-media-object" src="' + AdImageUrl + '">';
+					strHtml += '<div class="mui-media-body">' + AdTitle + '</div>'
+					strHtml += '</a>'
+					strHtml += '</li>'
+					//					plus.ui.toast(object.id + ' - ' + object.get('AdTitle'));
+				}
+				DailyRecommendationDiv.innerHTML = strHtml;
+				mui("#DailyRecommendationDiv").on('tap', 'li', function() {
+					var sendId = this.getAttribute("id");
+					//打开详细页面
+					mui.openWindow({
+						url: 'detail.html',
+						id: 'detail',
+						extras: {
+							sendId: sendId
+						}
+					});
+				});
+
+			},
+			error: function(error) {
+				plus.ui.toast("null");
+			}
+		});
+	</script>
+
+</html>

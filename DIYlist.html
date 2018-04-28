@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>DIY列表</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<script type="text/javascript" src="js/jquery.min.js"></script>
+		<script src="js/mui.min.js"></script>
+		<script type="text/javascript" src="js/bmobJS/bmob.js"></script>
+		<link rel="stylesheet" href="css/mui.min.css">
+		<style>
+			html,
+			body {
+				background-color: #efeff4;
+			}
+			
+			h5 {
+				padding-top: 8px;
+				padding-bottom: 8px;
+				text-indent: 12px;
+			}
+			
+			.mui-table-view.mui-grid-view .mui-table-view-cell .mui-media-body {
+				font-size: 15px;
+				margin-top: 8px;
+				color: #333;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 id="headertitle" class="mui-title"></h1>
+		</header>
+		<div class="mui-content" id="DailyRecommendationDiv" style="background-color:#fff">
+			<ul class="mui-table-view mui-grid-view">
+
+			</ul>
+		</div>
+
+	</body>
+	<script>
+		mui.init({
+			swipeBack: true //启用右滑关闭功能
+		});
+
+		//连接bmob云后台
+		Bmob.initialize("3d5064e6a4219ca68cba0c73e77acb2c", "016f7a543de4541347715ab101341c60");
+		//获取每日推荐数据——>选择详情列表为true的数据
+		var DetailsList = Bmob.Object.extend("DetailsTable");
+		var DetailsListquery = new Bmob.Query(DetailsList);
+		var self = plus.webview.currentWebview(); //获取当前窗体对象
+		var receiveID = parseInt(self.sendId); //接收A页面传入的id参数值
+		var TypeTitle = self.TypeTitle;
+		document.getElementById("headertitle").innerHTML = TypeTitle;
+		DetailsListquery.equalTo("TypesNo", receiveID);
+		DetailsListquery.find({
+			success: function(results) {
+				// 查询成功，调用get方法获取对应属性的值
+				var DailyRecommendationDiv = document.getElementById("DailyRecommendationDiv");
+				var strHtml = ""
+				var object = results[results.length - 1];
+				strHtml += '<ul class="mui-table-view mui-grid-view">';
+				// 循环处理查询到的数据
+				for(var i = 0; i < results.length; i++) {
+					var object = results[i];
+					var AdTitle = object.get('AdTitle')
+					var AdImageUrl = object.get('AdImageUrl')
+					strHtml += '<li id="' + object.id + '" class="mui-table-view-cell mui-media mui-col-xs-6">';
+					strHtml += '<a href="#">';
+					strHtml += '<img class="mui-media-object" src="' + AdImageUrl + '">';
+					strHtml += '<div class="mui-media-body">' + AdTitle + '</div>'
+					strHtml += '</a>'
+					strHtml += '</li>'
+					//					plus.ui.toast(object.id + ' - ' + object.get('AdTitle'));
+				}
+				DailyRecommendationDiv.innerHTML = strHtml;
+				mui("#DailyRecommendationDiv").on('tap', 'li', function() {
+					var sendId = this.getAttribute("id");
+					//打开详细页面
+					mui.openWindow({
+						url: 'detail.html',
+						id: 'detail',
+						extras: {
+							sendId: sendId
+						}
+					});
+				});
+
+			},
+			error: function(error) {
+				plus.ui.toast("null");
+			}
+		});
+	</script>
+
+</html>

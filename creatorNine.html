@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>DIY</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<script type="text/javascript" src="js/jquery.min.js"></script>
+		<script src="js/mui.min.js"></script>
+		<script type="text/javascript" src="js/bmobJS/bmob.js"></script>
+		<link rel="stylesheet" href="css/mui.min.css">
+		<style>
+			html,
+			body {
+				background-color: #efeff4;
+			}
+			
+			img {
+				width: auto;
+				height: auto;
+				max-width: 100%;
+				max-height: 100%;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="mui-content">
+			<h4>儿童乐园</h4>
+			<ul id="firstTypeList" class="mui-table-view mui-grid-view mui-grid-9">
+
+			</ul>
+			<h4>亲子互动</h4>
+			<ul id="secondTypeList" class="mui-table-view mui-grid-view mui-grid-9">
+			</ul>
+		</div>
+
+	</body>
+	<script>
+		//连接bmob云后台
+		Bmob.initialize("3d5064e6a4219ca68cba0c73e77acb2c", "016f7a543de4541347715ab101341c60");
+		var DIYClassification = Bmob.Object.extend("DIYClassification");
+		var query = new Bmob.Query(DIYClassification);
+		query.equalTo("ClassNo", 1);
+		query.ascending("TypesNo");
+		// 查询所有数据
+		query.find({
+			success: function(results) {
+				var firstTypeList = document.getElementById("firstTypeList");
+				var strHtml = ""
+				// 循环处理查询到的数据
+				for(var i = 0; i < results.length; i++) {
+					var object = results[i];
+					var TypeName = object.get('TypeName')
+					var TypeImageUrl = object.get('TypeImageUrl')
+					var TypesNo = object.get('TypesNo')
+					strHtml += '<li  id="' + TypesNo + TypeName + '" class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">';
+					strHtml += '<a href="#">';
+					strHtml += '<span class="mui-icon">';
+					strHtml += '<img src="' + TypeImageUrl + '"/>';
+					strHtml += '</span>';
+					strHtml += '<div class="mui-media-body">' + TypeName + '</div>';
+					strHtml += '</a>';
+					strHtml += '</li>';
+					//					strHtml += '';
+				}
+				firstTypeList.innerHTML = strHtml;
+				mui("#firstTypeList").on('tap', 'li', function() {
+					var id = this.getAttribute("id");
+					var sendId = id.substring(0, 3);
+					var TypeTitle = id.substring(3);
+					//打开子页面
+					mui.openWindow({
+						url: 'DIYlist.html',
+						id: 'DIYlist',
+						extras: {
+							sendId: sendId,
+							TypeTitle: TypeTitle
+						}
+					});
+				});
+
+			},
+			error: function(error) {
+				alert("查询失败: " + error.code + " " + error.message);
+			}
+		});
+		query.equalTo("ClassNo", 2);
+		query.ascending("TypesNo");
+		// 查询所有数据
+		query.find({
+			success: function(results) {
+				var secondTypeList = document.getElementById("secondTypeList");
+				var strHtml = ""
+				// 循环处理查询到的数据
+				for(var i = 0; i < results.length; i++) {
+					var object = results[i];
+					var TypeName = object.get('TypeName')
+					var TypeImageUrl = object.get('TypeImageUrl')
+					var TypesNo = object.get('TypesNo')
+					strHtml += '<li id="' + TypesNo + TypeName + '" class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">';
+					strHtml += '<a href="#">';
+					strHtml += '<span class="mui-icon">';
+					strHtml += '<img src="' + TypeImageUrl + '"/>';
+					strHtml += '</span>';
+					strHtml += '<div class="mui-media-body">' + TypeName + '</div>';
+					strHtml += '</a>';
+					strHtml += '</li>';
+					//					strHtml += '';
+				}
+				secondTypeList.innerHTML = strHtml;
+				mui("#secondTypeList").on('tap', 'li', function() {
+					var id = this.getAttribute("id");
+					var sendId = id.substring(0, 3);
+					var TypeTitle = id.substring(3);
+					//打开详细页面
+					mui.openWindow({
+						url: 'DIYlist.html',
+						id: 'DIYlist',
+						extras: {
+							sendId: sendId,
+							TypeTitle: TypeTitle
+						}
+					});
+				});
+			},
+			error: function(error) {
+				alert("查询失败: " + error.code + " " + error.message);
+			}
+		});
+	</script>
+
+</html>

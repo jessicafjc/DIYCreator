@@ -1,0 +1,54 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<script type="text/javascript" src="js/jquery.min.js"></script>
+		<script type="text/javascript" src="js/bmobJS/bmob.js"></script>
+		<link rel="stylesheet" href="css/mui.min.css">
+		<style>
+			html,
+			body {
+				background-color: #efeff4;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 id="headertitle" class="mui-title"></h1>
+		</header>
+	</body>
+	<script src="js/mui.min.js"></script>
+	<script type="text/javascript">
+		mui.init({
+			swipeBack: true //启用右滑关闭功能
+		});
+		var self = plus.webview.currentWebview(); //获取当前窗体对象
+		var receiveID = self.sendId; //接收A页面传入的id参数值
+		//		plus.ui.toast("查询到 ID为" + receiveID + " ");
+		Bmob.initialize("3d5064e6a4219ca68cba0c73e77acb2c", "016f7a543de4541347715ab101341c60");
+		//获取广告表
+		var advertise = Bmob.Object.extend("Advertise");
+		var AdvertiseQuery = new Bmob.Query(advertise);
+		// 查询所有数据
+		AdvertiseQuery.get(receiveID, {
+			success: function(results) {
+				// 查询成功，调用get方法获取对应属性的值
+				var strHtml = ""
+				var adtitie = results.get("AdTitle");
+				document.getElementById("headertitle").innerHTML = adtitie;
+				
+			},
+			error: function(error) {
+				alert("查询失败: " + error.code + " " + error.message);
+			}
+		});
+	</script>
+
+</html>

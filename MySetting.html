@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>Hello MUI</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<link rel="stylesheet" href="css/mui.min.css">
+		<style>
+			html,
+			body {
+				background-color: #efeff4;
+			}
+			
+			.title {
+				margin: 20px 15px 10px;
+				color: #6d6d72;
+				font-size: 15px;
+			}
+			
+			.mui-views,
+			.mui-view,
+			.mui-pages,
+			.mui-page,
+			.mui-page-content {
+				position: absolute;
+				left: 0;
+				right: 0;
+				top: 0;
+				bottom: 0;
+				width: 100%;
+				height: 100%;
+				background-color: #efeff4;
+			}
+			
+			.mui-pages {
+				top: 46px;
+				height: auto;
+			}
+			
+			.mui-scroll-wrapper,
+			.mui-scroll {
+				background-color: #efeff4;
+			}
+			
+			.mui-page.mui-transitioning {
+				-webkit-transition: -webkit-transform 300ms ease;
+				transition: transform 300ms ease;
+			}
+			
+			.mui-page-left {
+				-webkit-transform: translate3d(0, 0, 0);
+				transform: translate3d(0, 0, 0);
+			}
+			
+			.mui-ios .mui-page-left {
+				-webkit-transform: translate3d(-20%, 0, 0);
+				transform: translate3d(-20%, 0, 0);
+			}
+			
+			.mui-navbar {
+				position: fixed;
+				right: 0;
+				left: 0;
+				z-index: 10;
+				height: 44px;
+				background-color: #f7f7f8;
+			}
+			
+			.mui-navbar .mui-bar {
+				position: absolute;
+				background: transparent;
+				text-align: center;
+			}
+			
+			.mui-android .mui-navbar-inner.mui-navbar-left {
+				opacity: 0;
+			}
+			
+			.mui-ios .mui-navbar-left .mui-left,
+			.mui-ios .mui-navbar-left .mui-center,
+			.mui-ios .mui-navbar-left .mui-right {
+				opacity: 0;
+			}
+			
+			.mui-navbar .mui-btn-nav {
+				-webkit-transition: none;
+				transition: none;
+				-webkit-transition-duration: .0s;
+				transition-duration: .0s;
+			}
+			
+			.mui-navbar .mui-bar .mui-title {
+				display: inline-block;
+				width: auto;
+			}
+			
+			.mui-page-shadow {
+				position: absolute;
+				right: 100%;
+				top: 0;
+				width: 16px;
+				height: 100%;
+				z-index: -1;
+				content: '';
+			}
+			
+			.mui-page-shadow {
+				background: -webkit-linear-gradient(left, rgba(0, 0, 0, 0) 0, rgba(0, 0, 0, 0) 10%, rgba(0, 0, 0, .01) 50%, rgba(0, 0, 0, .2) 100%);
+				background: linear-gradient(to right, rgba(0, 0, 0, 0) 0, rgba(0, 0, 0, 0) 10%, rgba(0, 0, 0, .01) 50%, rgba(0, 0, 0, .2) 100%);
+			}
+			
+			.mui-navbar-inner.mui-transitioning,
+			.mui-navbar-inner .mui-transitioning {
+				-webkit-transition: opacity 300ms ease, -webkit-transform 300ms ease;
+				transition: opacity 300ms ease, transform 300ms ease;
+			}
+			
+			.mui-page {
+				display: none;
+			}
+			
+			.mui-pages .mui-page {
+				display: block;
+			}
+			
+			.mui-page .mui-table-view:first-child {
+				margin-top: 15px;
+			}
+			
+			.mui-page .mui-table-view:last-child {
+				margin-bottom: 30px;
+			}
+			
+			.mui-table-view {
+				margin-top: 20px;
+			}
+			
+			.mui-table-view span.mui-pull-right {
+				color: #999;
+			}
+			
+			.mui-table-view-divider {
+				background-color: #efeff4;
+				font-size: 14px;
+			}
+			
+			.mui-table-view-divider:before,
+			.mui-table-view-divider:after {
+				height: 0;
+			}
+			
+			.head {
+				height: 40px;
+			}
+			
+			#head {
+				line-height: 40px;
+			}
+			
+			.head-img {
+				margin-top: 60px;
+				width: 60px;
+				height: 60px;
+			}
+			
+			#head-img1 {
+				position: absolute;
+				bottom: 10px;
+				right: 60px;
+				width: 40px;
+				height: 40px;
+			}
+			
+			.update {
+				font-style: normal;
+				color: #999999;
+				margin-right: -25px;
+				font-size: 15px
+			}
+			
+			.mui-fullscreen {
+				position: fixed;
+				z-index: 20;
+				background-color: #000;
+			}
+			
+			.mui-ios .mui-navbar .mui-bar .mui-title {
+				position: static;
+			}
+			/*问题反馈在setting页面单独的css*/
+			
+			#feedback .mui-popover {
+				position: fixed;
+			}
+			
+			#feedback .mui-table-view:last-child {
+				margin-bottom: 0px;
+			}
+			
+			#feedback .mui-table-view:first-child {
+				margin-top: 0px;
+			}
+			/*问题反馈在setting页面单独的css==end*/
+			
+			.accountDiv {
+				height: 250px;
+				background-image: url(images/shuijiao.jpg);
+				background-repeat: no-repeat;
+				background-size: 100% 100%;
+				vertical-align: middle;
+				text-align: center;
+			}
+		</style>
+	</head>
+
+	<body>
+
+		<!--页面主结构结束-->
+		<!--主页面-->
+
+		<div class="mui-page-content">
+			<div class="mui-scroll-wrapper">
+				<div class="mui-scroll">
+					<div class="accountDiv">
+						<img class="mui-media-object  head-img" id="head-img" src="">
+						<div id="NickName" class="mui-media-body">
+							Hello 薛思静
+							<p class='mui-ellipsis'>账号:helloXSJ</p>
+						</div>
+					</div>
+
+					<ul class="mui-table-view mui-table-view-chevron">
+						<li class="mui-table-view-cell mui-collapse">
+							<a href="#" class="mui-navigate-right">账号与安全</a>
+							<ul class="mui-table-view mui-table-view-chevron">
+								<ul class="mui-table-view">
+									<li class="mui-table-view-cell">
+										<a id="head" class="mui-navigate-right">头像
+											<span class="mui-pull-right head">
+									<img class="head-img mui-action-preview" id="head-img1" src=""/>
+								</span>
+										</a>
+									</li>
+									<li class="mui-table-view-cell">
+										<a>姓名<span class="mui-pull-right">Hbuilder</span></a>
+									</li>
+									<li class="mui-table-view-cell">
+										<a>HBuilder账号<span class="mui-pull-right">hbuilder@dcloud.io</span></a>
+									</li>
+								</ul>
+								<ul class="mui-table-view">
+									<li class="mui-table-view-cell">
+										<a>QQ号<span class="mui-pull-right">88888888</span></a>
+									</li>
+									<li class="mui-table-view-cell">
+										<a>手机号<span class="mui-pull-right">18601234567</span></a>
+									</li>
+									<li class="mui-table-view-cell">
+										<a>邮箱地址<span class="mui-pull-right">hbuilder@dcloud.io</span></a>
+									</li>
+								</ul>
+
+							</ul>
+						</li>
+					</ul>
+					<ul class="mui-table-view  mui-table-view-chevron">
+						<li class="mui-table-view-cell">
+							<a class="mui-navigate-right">
+								我的收藏
+							</a>
+						</li>
+						<li class="mui-table-view-cell  mui-table-view-chevron">
+							<a class="mui-navigate-right">
+								设置
+							</a>
+						</li>
+					</ul>
+					<ul class="mui-table-view  mui-table-view-chevron" style="margin-top: 25px;">
+						<li class="mui-table-view-cell">
+							<a id="about" class="mui-navigate-right">
+								关于造物集
+							</a>
+						</li>
+					</ul>
+					<ul class="mui-table-view" style="margin-top: 25px;">
+						<li class="mui-table-view-cell">
+							<a id='exit' style="text-align: center;color: #FF3B30;">
+								退出登录
+							</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+
+		<!--主页面结束-->
+		<!--子页面-->
+	</body>
+	<script src="js/mui.min.js"></script>
+	<script src="js/mui.view.js "></script>
+	<script src="js/feedback.js"></script>
+	<script>
+		//添加newId自定义事件监听
+		window.addEventListener('show', function(event) {
+			//获得事件参数
+			var name = event.detail.name;
+			var strHtml;
+			strHtml += 'name',
+			strHtml += '<p class="mui-ellipsis">账号:' + helloXSJ + '</p>'
+			document.getElementById("NickName").innerHTML = name;
+
+		})
+		//退出操作******************
+		document.getElementById('exit').addEventListener('tap', function() {
+			if(mui.os.ios) {
+				//				app.setState({});
+				mui.openWindow({
+					url: 'login.html',
+					id: 'login',
+					show: {
+						aniShow: 'pop-in'
+					},
+					waiting: {
+						autoShow: false
+					}
+				});
+				return;
+			}
+			var btnArray = [{
+				title: "注销当前账号"
+			}, {
+				title: "直接关闭应用"
+			}];
+			plus.nativeUI.actionSheet({
+				cancel: "取消",
+				buttons: btnArray
+			}, function(event) {
+				var index = event.index;
+				switch(index) {
+					case 1:
+						//注销账号
+						app.setState({});
+						/*
+						 * 注意：
+						 * 1、因本示例应用启动页就是登录页面，因此注册成功后，直接显示登录页即可；
+						 * 2、如果真实案例中，启动页不是登录页，则需修改，使用mui.openWindow打开真实的登录页面
+						 */
+						//						plus.webview.getLaunchWebview().show("pop-in");
+						//若启动页不是登录页，则需通过如下方式打开登录页
+						mui.openWindow({
+							url: 'login.html',
+							id: 'login',
+							show: {
+								aniShow: 'pop-in'
+							}
+						});
+						break;
+					case 2:
+						plus.runtime.quit();
+						break;
+				}
+			});
+		}, false);
+		//************************
+	</script>
+
+</html>
