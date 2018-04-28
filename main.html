@@ -42,22 +42,15 @@
 			</a>
 		</nav>
 		<script>
-			(function($, doc) {
-				$.init();
-				var settings = app.getSettings();
-				var account = doc.getElementById('account');
-				//
-				window.addEventListener('show', function() {
-					var state = app.getState();
-					account.innerText = state.account;
-				}, false);
-			}(mui, document));
+				
 			//
+			var self = plus.webview.currentWebview(); //获取当前窗体对象
+			var receiveID = self.sendId; //接收A页面传入的id参数值
+			alert(receiveID);     
 			Bmob.initialize("3d5064e6a4219ca68cba0c73e77acb2c", "016f7a543de4541347715ab101341c60");
 			var AccountTable = Bmob.Object.extend("AccountTable");
 			var query = new Bmob.Query(AccountTable);
-			var self = plus.webview.currentWebview(); //获取当前窗体对象
-			var receiveID = self.sendId; //接收A页面传入的id参数值
+			 
 			//tabbar
 			//mui初始化
 			mui.init();
@@ -91,6 +84,8 @@
 			//选项卡点击事件
 			mui('.mui-bar-tab').on('tap', 'a', function(e) {
 				var targetTab = this.getAttribute('href');
+//									alert(targetTab);
+
 				if(targetTab == activeTab) {
 					return;
 				}
@@ -107,10 +102,12 @@
 					temp[targetTab] = "true";
 					mui.extend(aniShow, temp);
 					plus.webview.show(targetTab, "fade-in", 300);
+
 				}
 				
-				mui.fire(Page, 'show', {
+				mui.fire(Page, 'showAccount', {
 					name: receiveID //传往second.html的值
+					
 				});
 				//隐藏当前;
 				plus.webview.hide(activeTab);

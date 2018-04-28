@@ -147,18 +147,19 @@
 
 						} else {
 							var sendId = account.value;
-							plus.ui.toast("登录成功，欢迎您" + sendId);
-							//							mui.fire(plus.webview.getWebviewById('main.html'), "pageRefresh", {
-							//								sendId: sendId
-							//							});
+							//														mui.fire(plus.webview.getWebviewById('main.html'), "pageRefresh", {
+							//															sendId: sendId
+							//														});
 
 							mui.openWindow({
 								url: 'main.html',
 								id: 'main',
 								extras: {
 									sendId: sendId
-								}
+								},
+//								createNew:true,
 							})
+							plus.ui.toast("登录成功，欢迎您" + sendId);
 
 						}
 
