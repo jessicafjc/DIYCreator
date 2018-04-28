@@ -149,11 +149,19 @@
 						if(results.length == 0) {
 							var accountTable = new AccountTable();
 							accountTable.save({
-								Password: "1337",
-								Account: "bmob"
+								Password: password.value,
+								Account: account.value
 							}, {
 								success: function(gameScore) {
+									var sendId = account.value; 
 									plus.ui.toast("添加成功，自动登录中……");
+									mui.openWindow({
+										url: 'main.html',
+										id: 'main',
+										extras: {
+											sendId: sendId
+										}
+									})
 								},
 								error: function(gameScore, error) {
 									plus.ui.toast("添加失败，请检查网络");
