@@ -226,9 +226,9 @@
 			<div class="mui-scroll-wrapper">
 				<div class="mui-scroll">
 					<div class="accountDiv">
-						<img class="mui-media-object  head-img" id="head-img" src="">
+						<img class="mui-media-object  head-img" id="head-img" src="images/user-photo.png">
 						<div id="account" class="mui-media-body">
-							TESTING
+							欢迎您回来
 							<!--							<p class='mui-ellipsis'>账号:helloXSJ</p>
 -->
 						</div>
@@ -306,15 +306,14 @@
 	<script src="js/feedback.js"></script>
 	<script>
 		//添加newId自定义事件监听
+		var account = "";
 		window.addEventListener('showAccount', function(event) {
 			//获得事件参数
-			var name = event.detail.name;
+			account = event.detail.account;
 			//			alert(name); 
-			var strHtml;
-			strHtml += 'name',
-				//			strHtml += '<p class="mui-ellipsis">账号:' + helloXSJ + '</p>'
-				document.getElementById("account").innerHTML = name;
-
+			var strHtml = "欢迎您：";
+			strHtml += account,
+				document.getElementById("account").innerHTML = strHtml;
 		})
 		//退出操作******************
 		document.getElementById('exit').addEventListener('tap', function() {
@@ -323,39 +322,9 @@
 				localStorage.clear();
 				plus.runtime.restart();
 				return;
-				//				mui.openWindow({
-				//					url: 'login.html',
-				//					id: 'login',
-				//					show: {
-				//						aniShow: 'pop-in'
-				//					},
-				//					waiting: {
-				//						autoShow: false
-				//					},
-				//					createNew:true,
-				//				});
-				//				return;
+
 			}
-			//			var btnArray = [{
-			//				title: "注销当前账号"
-			//			}, {
-			//				title: "直接关闭应用"
-			//			}];
-			//			plus.nativeUI.actionSheet({
-			//				cancel: "取消",
-			//				buttons: btnArray
-			//			}, function(event) {
-			//				var index = event.index;
-			//				switch(index) {
-			//					case 1:
-			//						localStorage.clear();
-			//                      plus.runtime.restart();
-			//                      break;
-			//					case 2:
-			//						plus.runtime.quit();
-			//						break;
-			//				}
-			//			});
+
 		}, false);
 		//************************
 	</script>
