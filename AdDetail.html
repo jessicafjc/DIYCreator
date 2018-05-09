@@ -26,12 +26,21 @@
 	</body>
 	<script src="js/mui.min.js"></script>
 	<script type="text/javascript">
-		mui.init({
-			swipeBack: true //启用右滑关闭功能
-		});
 		var self = plus.webview.currentWebview(); //获取当前窗体对象
 		var receiveID = self.sendId; //接收A页面传入的id参数值
-		//		plus.ui.toast("查询到 ID为" + receiveID + " ");
+		var OutbountUrl = self.OutbountUrl; //接收A页面传入的id参数值
+
+		mui.init({
+			subpages: [{
+				url: OutbountUrl,
+				id: 'list.html',
+				styles: {
+					top: '45px', //mui标题栏默认高度为45px；
+					bottom: '0px' //默认为0px，可不定义；
+				}
+			}]
+		});
+
 		Bmob.initialize("3d5064e6a4219ca68cba0c73e77acb2c", "016f7a543de4541347715ab101341c60");
 		//获取广告表
 		var advertise = Bmob.Object.extend("Advertise");
@@ -43,7 +52,7 @@
 				var strHtml = ""
 				var adtitie = results.get("AdTitle");
 				document.getElementById("headertitle").innerHTML = adtitie;
-				
+
 			},
 			error: function(error) {
 				alert("查询失败: " + error.code + " " + error.message);

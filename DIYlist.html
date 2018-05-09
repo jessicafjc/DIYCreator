@@ -56,7 +56,6 @@
 		var self = plus.webview.currentWebview(); //获取当前窗体对象
 		var receiveID = parseInt(self.sendId); //接收A页面传入的id参数值
 		var account = parseInt(self.account); //接收A页面传入的id参数值
-	alert(account)
 		var TypeTitle = self.TypeTitle;
 		document.getElementById("headertitle").innerHTML = TypeTitle;
 		DetailsListquery.equalTo("TypesNo", receiveID);

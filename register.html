@@ -86,6 +86,12 @@
 			.oauth-area .oauth-btn.disabled {
 				background-color: #ddd;
 			}
+			.mui-input-group label {
+				width: 30%;
+			}
+			.mui-input-row label~input, .mui-input-row label~select, .mui-input-row label~textarea {
+				width: 70%;
+			}
 		</style>
 
 	</head>
@@ -97,7 +103,7 @@
 		<div class="mui-content">
 			<form id='login-form' class="mui-input-group">
 				<div class="mui-input-row">
-					<label>创建账号</label>
+					<label >创建账号</label>
 					<input id='account' type="text" class="mui-input-clear mui-input" placeholder="请输入账号">
 				</div>
 				<div class="mui-input-row">

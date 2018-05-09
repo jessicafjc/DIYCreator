@@ -103,14 +103,14 @@
 		mui.init({
 			swipeBack: false //启用右滑关闭功能
 		});
-//		var self = plus.webview.currentWebview(); //获取当前窗体对象
-//			var receiveID = self.sendId; //接收A页面传入的id参数值
-//						console.log("传递参数receiveID:" + receiveID);
+		//		var self = plus.webview.currentWebview(); //获取当前窗体对象
+		//			var receiveID = self.sendId; //接收A页面传入的id参数值
+		//						console.log("传递参数receiveID:" + receiveID);
 		//添加newId自定义事件监听
-		var account = "默认值" ;//全局变量
+		var account = "默认值"; //全局变量
 		window.addEventListener('showAccount', function(event) {
 			//获得事件参数
-			account = event.detail.account;//监听参数
+			account = event.detail.account; //监听参数
 			console.log("Hlisten：" + account);
 		});
 		console.log("Hquanju：" + account);
@@ -131,8 +131,9 @@
 				var AdTitle = object.get('AdTitle')
 				//				alert(AdTitle)
 				var AdImageUrl = object.get('AdImageUrl')
+				var OutUrl = object.get('OutboundUrl')
 				//第一个节点是最后一个广告
-				strHtml += '<div id="' + object.id + '" class="mui-slider-item mui-slider-item-duplicate">';
+				strHtml += '<div id="' + object.id + OutUrl + '" class="mui-slider-item mui-slider-item-duplicate">';
 				strHtml += '<a href="#">';
 				strHtml += '<img src="' + AdImageUrl + '">';
 				strHtml += '<p class="mui-slider-title">' + AdTitle + '</p>';
@@ -140,24 +141,25 @@
 				strHtml += '</div>';
 				for(var i = 0; i < results.length; i++) {
 					var object = results[i];
-					//alert(object.id + ' - ' + object.get('AdTitle') + object.get('AdImageUrl'));
 					var AdTitle = object.get('AdTitle')
 					var AdImageUrl = object.get('AdImageUrl')
+					var OutUrl = object.get('OutboundUrl')
+
 					//循环
-					strHtml += '<div id="' + object.id + '" class="mui-slider-item">';
+					strHtml += '<div id="' + object.id + OutUrl + '" class="mui-slider-item">';
 					strHtml += '<a href="#">';
 					strHtml += '<img src="' + AdImageUrl + '">';
 					strHtml += '<p class="mui-slider-title">' + AdTitle + '</p>';
 					strHtml += '</a>';
 					strHtml += '</div>';
-					//					alert(AdTitle);
 				}
 				//最后一个节点是第一个广告
 				var object = results[0];
 				var AdTitle = object.get('AdTitle')
-				//				alert(AdTitle)
 				var AdImageUrl = object.get('AdImageUrl')
-				strHtml += '<div id="' + object.id + '" class="mui-slider-item mui-slider-item-duplicate">';
+				var OutUrl = object.get('OutboundUrl')
+
+				strHtml += '<div id="' + object.id + OutUrl + '" class="mui-slider-item mui-slider-item-duplicate">';
 				strHtml += '<a href="#">';
 				strHtml += '<img src="' + AdImageUrl + '">';
 				strHtml += '<p class="mui-slider-title">' + AdTitle + '</p>';
@@ -166,13 +168,16 @@
 				testSlider.innerHTML = strHtml;
 				//				alert(strHtml);
 				mui("#testSlider").on('tap', 'div', function() {
-					var sendId = this.getAttribute("id");
+					var id = this.getAttribute("id");
+					var sendId = id.substring(0, 8);
+					var OutbountUrl = id.substring(8);
 					//打开广告详情页面
 					mui.openWindow({
 						url: 'AdDetail.html',
 						id: 'AdDetail',
 						extras: {
-							sendId: sendId
+							sendId: sendId,
+							OutbountUrl:OutbountUrl
 						}
 					});
 				});
