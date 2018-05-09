@@ -32,7 +32,7 @@
 	</head>
 
 	<body>
-		<div class="mui-content">
+		<div id="pullrefresh" class="mui-content mui-scroll-wrapper">
 			<div class="mui-content-padded" style="margin: 5px;">
 				<!--<h5>默认搜索框：</h5>
 				<div class="mui-input-row mui-search">
@@ -100,9 +100,28 @@
 		</div>
 	</body>
 	<script>
+		//		mui.init({
+		//			swipeBack: false //启用右滑关闭功能
+		//		});
+
 		mui.init({
-			swipeBack: false //启用右滑关闭功能
+			pullRefresh: {
+				container: '#pullrefresh',
+				down: {
+					style: 'circle',
+					callback: pulldownRefresh
+				}
+
+			}
 		});
+
+		function pulldownRefresh() {
+			setTimeout(function() {
+					window.location.reload();
+				mui('#pullrefresh').pullRefresh().endPulldownToRefresh();
+				mui.toast("刷新页面完毕~");
+			}, 1500);
+		}
 		//		var self = plus.webview.currentWebview(); //获取当前窗体对象
 		//			var receiveID = self.sendId; //接收A页面传入的id参数值
 		//						console.log("传递参数receiveID:" + receiveID);
@@ -177,7 +196,7 @@
 						id: 'AdDetail',
 						extras: {
 							sendId: sendId,
-							OutbountUrl:OutbountUrl
+							OutbountUrl: OutbountUrl
 						}
 					});
 				});
