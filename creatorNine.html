@@ -39,16 +39,6 @@
 
 	</body>
 	<script>
-		//添加newId自定义事件监听
-		var account = "默认值" ;//全局变量
-		window.addEventListener('showAccount', function(event) {
-			//获得事件参数
-		 account = event.detail.account;
-		 
-			console.log("Clisten：" + account);
-		})
-		account = "ceshi" + account;
-		console.log("Cquanju：" + account);
 
 		//连接bmob云后台
 		Bmob.initialize("3d5064e6a4219ca68cba0c73e77acb2c", "016f7a543de4541347715ab101341c60");

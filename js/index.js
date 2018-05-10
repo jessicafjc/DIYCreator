@@ -1,5 +1,4 @@
 
-
 		Bmob.initialize("37cb635d256a5ff7494bb32edf741237", "b37ee761a08c5e11740d2c7cc83379c5");
 		var Advertise = Bmob.Object.extend("advertise");
 		var query = new Bmob.Query(Advertise);

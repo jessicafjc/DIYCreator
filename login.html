@@ -13,15 +13,19 @@
 			.area {
 				margin: 20px auto 0px auto;
 			}
+			
 			.mui-input-group {
 				margin-top: 10px;
 			}
+			
 			.mui-input-group:first-child {
 				margin-top: 20px;
 			}
+			
 			.mui-input-group label {
 				width: 22%;
 			}
+			
 			.mui-input-row label~input,
 			.mui-input-row label~select,
 			.mui-input-row label~textarea {
@@ -129,6 +133,7 @@
 			var query = new Bmob.Query(AccountTable);
 
 			function login() {
+				//js里获取html内的id
 				var account = document.getElementById("account");
 				var password = document.getElementById("password");
 				if(account.value.length == 0) {
@@ -139,7 +144,7 @@
 					plus.ui.toast("密码不能为空");
 					return;
 				}
-
+				//对比数据库中accounttable表里的数据，判断账号、密码是否正确
 				query.equalTo("Account", account.value);
 				query.equalTo("Password", password.value);
 				// 查询所有数据
