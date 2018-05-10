@@ -31,13 +31,11 @@
 		</style>
 	</head>
 
-	<body>
-		<div id="pullrefresh" class="mui-content mui-scroll-wrapper">
+	<div id="pullrefresh">
+		<div class="mui-content ">
+
 			<div class="mui-content-padded" style="margin: 5px;">
-				<!--<h5>默认搜索框：</h5>
-				<div class="mui-input-row mui-search">
-					<input type="search" class="mui-input-clear" placeholder="">
-				</div>-->
+				
 				<div class="mui-input-row mui-search">
 					<input id="search" type="search" class="mui-input-speech mui-input-clear" placeholder="输入搜索框">
 				</div>
@@ -73,7 +71,7 @@
 					<div id="K081DDDX" class="mui-slider-item mui-slider-item-duplicate"><img src="images/shuijiao.jpg">
 						<p class="mui-slider-title">小马胸针</p>
 					</div>
-				</div>  
+				</div>
 				<div class="mui-slider-indicator mui-text-right">
 					<div class="mui-indicator mui-active"></div>
 					<div class="mui-indicator"></div>
@@ -93,13 +91,17 @@
 			<div class="mui-content" id="LatestUpdataDiv" style="background-color:#fff">
 				<h5 style="background-color:#efeff4">最新更新</h5>
 				<ul class="mui-table-view mui-grid-view">
-
 				</ul>
 			</div>
 			<!---->
 		</div>
+	</div>
+
 	</body>
 	<script>
+		mui.init({
+			swipeBack: false //启用右滑关闭功能
+		});
 		//	下拉刷新
 		mui.init({
 			pullRefresh: {
@@ -118,10 +120,8 @@
 				mui('#pullrefresh').pullRefresh().endPulldownToRefresh();
 				mui.toast("刷新页面完毕~");
 			}, 1500);
-		}
-		//		var self = plus.webview.currentWebview(); //获取当前窗体对象
-		//			var receiveID = self.sendId; //接收A页面传入的id参数值
-		//						console.log("传递参数receiveID:" + receiveID);
+		};
+
 		//添加newId自定义事件监听
 		var account = "默认值"; //全局变量
 		window.addEventListener('showAccount', function(event) {
@@ -259,7 +259,6 @@
 		Latestquery.limit(4);
 		Latestquery.find({
 			success: function(results) {
-
 				var LatestUpdataDiv = document.getElementById("LatestUpdataDiv");
 				var strHtml = ""
 				var object = results[results.length - 1];
