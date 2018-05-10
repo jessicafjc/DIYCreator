@@ -13,19 +13,15 @@
 			.area {
 				margin: 20px auto 0px auto;
 			}
-			
 			.mui-input-group {
 				margin-top: 10px;
 			}
-			
 			.mui-input-group:first-child {
 				margin-top: 20px;
 			}
-			
 			.mui-input-group label {
 				width: 22%;
 			}
-			
 			.mui-input-row label~input,
 			.mui-input-row label~select,
 			.mui-input-row label~textarea {
@@ -86,6 +82,10 @@
 			.oauth-area .oauth-btn.disabled {
 				background-color: #ddd;
 			}
+			
+			.mui-content {
+				background-color: #ffffff;
+			}
 		</style>
 
 	</head>
@@ -95,6 +95,9 @@
 			<h1 class="mui-title">登录</h1>
 		</header>
 		<div class="mui-content">
+			<div class="mui-card-content">
+				<img src="images/logo.png" alt="" width="100%" />
+			</div>
 			<form id='login-form' class="mui-input-group">
 				<div class="mui-input-row">
 					<label>账号</label>
@@ -147,7 +150,7 @@
 
 						} else {
 							var sendId = account.value;
-						
+
 							mui.openWindow({
 								url: 'main.html',
 								id: 'main',

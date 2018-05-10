@@ -86,11 +86,19 @@
 			.oauth-area .oauth-btn.disabled {
 				background-color: #ddd;
 			}
+			
 			.mui-input-group label {
 				width: 30%;
 			}
-			.mui-input-row label~input, .mui-input-row label~select, .mui-input-row label~textarea {
+			
+			.mui-input-row label~input,
+			.mui-input-row label~select,
+			.mui-input-row label~textarea {
 				width: 70%;
+			}
+			
+			.mui-content {
+				background-color: #ffffff;
 			}
 		</style>
 
@@ -101,9 +109,12 @@
 			<h1 class="mui-title">注册</h1>
 		</header>
 		<div class="mui-content">
+			<div class="mui-card-content">
+				<img src="images/logo.png" alt="" width="100%" />
+			</div>
 			<form id='login-form' class="mui-input-group">
 				<div class="mui-input-row">
-					<label >创建账号</label>
+					<label>创建账号</label>
 					<input id='account' type="text" class="mui-input-clear mui-input" placeholder="请输入账号">
 				</div>
 				<div class="mui-input-row">
@@ -145,7 +156,7 @@
 				if(password.value != repassword.value) {
 					plus.ui.toast("两次输入的密码不一致");
 					return;
-				}     
+				}
 				query.equalTo("Account", account.value);
 				query.equalTo("Password", password.value);
 
@@ -159,8 +170,8 @@
 								Account: account.value
 							}, {
 								success: function(gameScore) {
-									var sendId = account.value; 
-									
+									var sendId = account.value;
+
 									plus.ui.toast("添加成功，自动登录中……");
 									mui.openWindow({
 										url: 'main.html',
@@ -171,7 +182,7 @@
 									})
 								},
 								error: function(gameScore, error) {
-									plus.ui.toast("添加失败，请检查网络");
+									plus.ui.toast("添加失败~");
 								}
 							});
 						} else {

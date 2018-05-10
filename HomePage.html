@@ -31,11 +31,11 @@
 		</style>
 	</head>
 
-	<div id="pullrefresh">
-		<div class="mui-content ">
+	<div id="pullrefresh" class="mui-content mui-scroll-wrapper">
+		<div class="mui-scroll">
 
 			<div class="mui-content-padded" style="margin: 5px;">
-				
+
 				<div class="mui-input-row mui-search">
 					<input id="search" type="search" class="mui-input-speech mui-input-clear" placeholder="输入搜索框">
 				</div>
@@ -93,15 +93,12 @@
 				<ul class="mui-table-view mui-grid-view">
 				</ul>
 			</div>
-			<!---->
 		</div>
+		<!---->
 	</div>
 
 	</body>
 	<script>
-		mui.init({
-			swipeBack: false //启用右滑关闭功能
-		});
 		//	下拉刷新
 		mui.init({
 			pullRefresh: {
