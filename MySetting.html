@@ -233,7 +233,7 @@
 -->
 						</div>
 					</div>
-<!--
+					<!--
 					<ul class="mui-table-view mui-table-view-chevron">
 						<li class="mui-table-view-cell mui-collapse">
 							<a href="#" class="mui-navigate-right">账号与安全</a>
@@ -306,7 +306,8 @@
 	<script src="js/feedback.js"></script>
 	<script>
 		//添加newId自定义事件监听
-		var account = "";
+		var account = localStorage.getItem("targetId");
+//		alert(account)
 		window.addEventListener('showAccount', function(event) {
 			//获得事件参数
 			account = event.detail.account;

@@ -155,6 +155,8 @@
 
 						} else {
 							var sendId = account.value;
+							//本地存储
+							localStorage.setItem("targetId", sendId);
 
 							mui.openWindow({
 								url: 'main.html',
